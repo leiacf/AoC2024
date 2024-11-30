@@ -1,2 +1,2 @@
 # AoC2024
-Another year, another advent!
+Ready to rumble with yet another Advent of Code
