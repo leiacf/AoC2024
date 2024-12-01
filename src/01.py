@@ -41,11 +41,7 @@ def calculate(l1, l2):
     total = 0
 
     for x in range(0, len(l1)):
-
-        if l1[x] > l2[x]:
-            total += l1[x] -l2[x]
-        else:
-            total += l2[x] - l1[x]
+        total += abs(l1[x] - l2[x])
     
     return total
 
