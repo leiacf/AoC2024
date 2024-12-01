@@ -7,17 +7,82 @@ def test():
 
     input = [
 
+        "3   4",
+        "4   3",
+        "2   5",
+        "1   3",
+        "3   9",
+        "3   3"
+
     ]
 
     return input
 
+def parse(input):
+
+    l1 = []
+    l2 = []
+
+    for line in input:
+
+        num1, num2 = line.split("  ")
+        num1 = int(num1)
+        num2 = int(num2)
+        l1.append(num1)
+        l2.append(num2)
+
+    l1.sort()
+    l2.sort()
+
+    return l1, l2
+
+def calculate(l1, l2):
+
+    total = 0
+
+    for x in range(0, len(l1)):
+
+        if l1[x] > l2[x]:
+            total += l1[x] -l2[x]
+        else:
+            total += l2[x] - l1[x]
+    
+    return total
+
+def similarity(l1, l2):
+
+    total = 0
+
+    for number in l1:
+
+        times = 0        
+
+        for other in l2:
+
+            if number == other:
+                times +=1 
+
+        amount = number * times
+        total += amount
+
+    return total
+
 def part1(input):
 
-    print("Part 1: ")
+    l1, l2 = parse(input)
+
+    total = calculate(l1, l2)
+
+    print("Part 1: The total distance is", total)
+
 
 def part2(input):
 
-    print("Part 2: ")
+    l1, l2 = parse(input)
+
+    total = similarity(l1, l2)
+
+    print("Part 2: The similarity score is", total)
 
 filename = "../input/01.txt"
 input = files.input_as_list(filename)
