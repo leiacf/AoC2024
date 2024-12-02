@@ -25,11 +25,9 @@ def parse(input):
 
     for line in input:
 
-        num1, num2 = line.split("  ")
-        num1 = int(num1)
-        num2 = int(num2)
-        l1.append(num1)
-        l2.append(num2)
+        num1, num2 = line.split()
+        l1.append(int(num1))
+        l2.append(int(num2))
 
     l1.sort()
     l2.sort()
@@ -56,10 +54,9 @@ def similarity(l1, l2):
         for other in l2:
 
             if number == other:
-                times +=1 
+                times +=1
 
-        amount = number * times
-        total += amount
+        total += (number*times)
 
     return total
 
