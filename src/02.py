@@ -1,6 +1,7 @@
 #Advent of Code 2024 Day 02
 
 from tools import files
+from tools import parsing
 import time
 import copy
 
@@ -21,18 +22,7 @@ def test():
 
 def parse(input):
 
-    reports = []
-
-    for line in input:
-        levels = line.split()
-
-        intlevels = []
-
-        for level in levels:
-            level = int(level)
-            intlevels.append(level)
-
-        reports.append(intlevels)
+    reports = parsing.strings_to_ints(input)
 
     return reports
 
