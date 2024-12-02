@@ -3,7 +3,6 @@
 from tools import files
 from tools import parsing
 import time
-import copy
 
 def test():
 
@@ -26,108 +25,41 @@ def parse(input):
 
     return reports
 
-def increasing(levels):
+def is_safe(levels):
 
-    for x in range(1, len(levels)):
-        if levels[x-1] >= levels[x]:
-            return False
-        
+    pairs = list(zip(levels, levels[1:]))
+
+    increasing = all(a < b for a, b in pairs)
+    decreasing = all(a > b for a, b in pairs)
+
+    if not (increasing or decreasing):
+        return False
+    
+    if any(abs(a-b) > 3 for a, b in pairs):
+        return False
+    
     return True
 
-def decreasing(levels):
+def is_safe_damp(levels):
 
-    for x in range(1, len(levels)):
-        if levels[x-1] <= levels[x]:
-            return False
-        
-    return True
+        if is_safe(levels):
+             return True
 
-def numbers(levels):
-
-    for x in range(1, len(levels)):
-
-        if abs(levels[x-1] - levels[x]) == 1 or abs(levels[x-1] - levels[x]) == 2 or abs(levels[x-1] - levels[x]) == 3:
-           continue
-        else:
-            return False
-        
-    return True
-
+        for x in range(len(levels)):
+            damp = levels[:x] + levels[x+1:]
+            if is_safe(damp):
+                return True
+                
+        return False
+    
 def check(reports):
 
     safe = 0
 
     for levels in reports:
 
-        if increasing(levels):
-            if numbers(levels):
-                safe += 1
-
-        elif decreasing(levels):
-            if numbers(levels):
-                safe += 1
-
-    return safe
-
-def damp_increasing(levels):
-
-    safe = 0
-
-    if increasing(levels):
-        if numbers(levels):
-            safe +=1
-        
-        else:
-            for x in range(0, len(levels)):
-
-                temp = copy.deepcopy(levels)
-                del temp[x]
-
-                if numbers(temp):
-                    safe += 1
-                    break
-
-    else:
-        for x in range(0, len(levels)):
-        
-            temp = copy.deepcopy(levels)
-            del temp[x]
-
-            if increasing(temp):
-                if numbers(temp):
-                    safe +=1
-                    break
-
-    return safe
-
-def damp_decreasing(levels):
-    
-    safe = 0
-
-    if decreasing(levels):
-        if numbers(levels):
-            safe +=1
-        
-        else:
-            for x in range(0, len(levels)):
-
-                temp = copy.deepcopy(levels)
-                del temp[x]
-                
-                if numbers(temp):
-                    safe += 1
-                    break
-
-    else:
-        for x in range(0, len(levels)):
-        
-            temp = copy.deepcopy(levels)
-            del temp[x]
-
-            if decreasing(temp):
-                if numbers(temp):
-                    safe +=1
-                    break
+        if is_safe(levels):
+            safe += 1
 
     return safe
 
@@ -137,13 +69,8 @@ def check_damp(reports):
 
     for levels in reports:
 
-        increase = damp_increasing(levels)
-        
-        if increase != 0:
-            safe += increase
-            continue
-
-        safe += damp_decreasing(levels)
+        if is_safe_damp(levels):
+            safe += 1
 
     return safe
 
