@@ -4,12 +4,7 @@ def strings_to_ints(data):
 
     for line in data:
         
-        temp = []
-        strings = line.split()
-
-        for string in strings:
-            temp.append(int(string))
-
+        temp = [int(x) for x in line.split()]
         ints.append(temp)
 
     return ints
