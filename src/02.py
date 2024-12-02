@@ -147,7 +147,12 @@ def check_damp(reports):
 
     for levels in reports:
 
-        safe += damp_increasing(levels)
+        increase = damp_increasing(levels)
+        
+        if increase != 0:
+            safe += increase
+            continue
+
         safe += damp_decreasing(levels)
 
     return safe
