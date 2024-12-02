@@ -1,6 +1,7 @@
 #Advent of Code 2024 Day 01
 
 from tools import files
+from tools import parsing
 import time
 
 def test():
@@ -20,14 +21,14 @@ def test():
 
 def parse(input):
 
+    ints = parsing.strings_to_ints(input)
+
     l1 = []
     l2 = []
 
-    for line in input:
-
-        num1, num2 = line.split()
-        l1.append(int(num1))
-        l2.append(int(num2))
+    for numbers in ints:
+        l1.append(numbers[0])
+        l2.append(numbers[1])
 
     l1.sort()
     l2.sort()
@@ -49,13 +50,7 @@ def similarity(l1, l2):
 
     for number in l1:
 
-        times = 0        
-
-        for other in l2:
-
-            if number == other:
-                times +=1
-
+        times = l2.count(number)
         total += (number*times)
 
     return total
