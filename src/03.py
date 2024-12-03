@@ -24,7 +24,7 @@ def parse(input, part2=False):
         pattern = r"(mul)\((\d+),(\d+)\)|(do)\(\)|(don't)\(\)"
 
     for line in input:
-        matches = matches + re.findall(pattern, line)
+        matches.extend(re.findall(pattern, line))
 
     for match in matches:
 
