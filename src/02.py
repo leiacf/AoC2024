@@ -105,5 +105,5 @@ part2(input)
 end2 = time.perf_counter()
 
 print()
-print("Spent {:>7.2f} seconds on Part 1".format(end1-start1))
-print("Spent {:>7.2f} seconds on Part 2".format(end2-start2))
+print("Spent {:>7.3f} seconds on Part 1".format(end1-start1))
+print("Spent {:>7.3f} seconds on Part 2".format(end2-start2))
