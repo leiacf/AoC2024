@@ -1,23 +1,73 @@
 #Advent of Code 2024 Day 11
 
 from tools import files
+from tools import parsing
 import time
+
+cache = {}
 
 def test():
 
     input = [
 
+        #"0 1 10 99 999"
+        "125 17"
+
     ]
 
     return input
 
+def parse(input):
+
+    stones = parsing.strings_to_ints(input)
+
+    return stones[0]
+
+def blink(stone, blinks):
+
+    if (blinks == 0):
+        return 1
+
+    if (stone, blinks) in cache:
+        return cache[(stone, blinks)]
+    
+    if (stone == 0):
+        amount = blink(1, blinks-1)
+
+    elif(len(str(stone))) % 2 == 0:
+        string = str(stone)
+        cut = len(string) // 2
+        one = int(string[:cut])
+        two = int(string[cut:])  
+
+        amount = blink(one, blinks-1) + blink(two, blinks-1)
+
+    else:
+        amount = blink(stone*2024, blinks-1)
+
+    cache[(stone, blinks)] = amount
+
+    return amount
+
 def part1(input):
 
-    print("Part 1: ")
+    stones = parse(input)
+    amount = 0
+
+    for stone in stones:
+        amount += blink(stone, 25)
+
+    print("Part 1: My stone collection is", amount)
 
 def part2(input):
 
-    print("Part 2: ")
+    stones = parse(input)
+    amount = 0
+
+    for stone in stones:
+        amount += blink(stone, 75)
+
+    print("Part 2: My stone collection is", amount)
 
 filename = "../input/11.txt"
 input = files.input_as_list(filename)
